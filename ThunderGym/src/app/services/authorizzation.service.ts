@@ -78,6 +78,7 @@ export class AuthorizzationService {
     }
     const user:IloginResponse = JSON.parse(userJson) //se c'è lo trasformo e controllo se il token  è scaduto
     if(this.jwtHelper.isTokenExpired(user.accessToken)){ // mi torna un boleano true o false
+      localStorage.clear()
      return // se è true vuol dire che il token è scaduto se è false è valido e pusho user al subject
     }
     this.authSubject.next(user)

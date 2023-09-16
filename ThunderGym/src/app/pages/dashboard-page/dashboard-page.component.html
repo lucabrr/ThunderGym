@@ -1,8 +1,77 @@
 <div class="mainContainer">
-  <div class="container text-center">
-    <div class="row">
-      <div class="col"></div>
-      <a [routerLink]="['/client']">Clienti</a>
+  <div class="container pt-5">
+    <!-- prima riga -->
+    <div class="row firstRow">
+      <div class="col mb-2 d-flex flex-column align-items-center">
+        <div class="colv1">
+          <div class="titleContainer">Clienti totali</div>
+          <div class="numberContainer">{{ numeroTotaleClienti }}</div>
+        </div>
+      </div>
+      <div class="col mb-2 d-flex flex-column align-items-center">
+        <div class="colv1">
+          <div class="titleContainer">Clienti con ingresso valido</div>
+          <div class="numberContainer">{{ numeroTotaleValidClienti }}</div>
+        </div>
+      </div>
+      <div class="col mb-2 d-flex flex-column align-items-center">
+        <div class="colv1">
+          <div class="titleContainer">Clienti attivi</div>
+          <div class="numberContainer">{{ numeroTotaleActiveClienti }}</div>
+        </div>
+      </div>
+      <div class="col mb-2 d-flex flex-column align-items-center">
+        <div class="colv1">
+          <div class="titleContainer">Clienti inattivi</div>
+          <div class="numberContainer">{{ numeroTotaleInactiveClienti }}</div>
+        </div>
+      </div>
+    </div>
+    <!-- SECONDA RIGA -->
+    <div class="row mt-5">
+      <div class="col-6">
+        <div class="colv1 colv2 mb-2">
+          <div class="titleContainer">Fatturato mensile</div>
+          <div class="numberContainer text-center">
+            {{ importoMeseCorrente.toFixed(2) }} €
+          </div>
+          <div
+            class="footerContainer d-flex justify-content-between align-items-center"
+          >
+            <div>
+              <div class="text-light">Mese Precendente</div>
+              <div class="text-light">{{ importoMeseScorso.toFixed(2) }} €</div>
+            </div>
+            <div [ngStyle]="{ color: colorPercentualeFatturato }">
+              {{ percentualeFatturato }}%
+            </div>
+          </div>
+        </div>
+        <div class="colv1 colv2">
+          <div class="titleContainer">Iscrizioni totali mensili</div>
+          <div class="numberContainer text-center">
+            {{ iscrittiMeseCorrente }}
+          </div>
+          <div
+            class="footerContainer d-flex justify-content-between align-items-center"
+          >
+            <div>
+              <div class="text-light">Mese Precendente</div>
+              <div class="text-light">{{ iscrittiMeseScorso }}</div>
+            </div>
+            <div [ngStyle]="{ color: colorPercentualeIscrizioni }">
+              {{ percentualeIscritti }}%
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="colv1 colv2">
+          <div class="titleContainer">
+            <a [routerLink]="['/client']">Iscrivi nuovo cliente</a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

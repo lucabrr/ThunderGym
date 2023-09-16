@@ -1,0 +1,45 @@
+@import "src/styles.scss";
+
+
+.mainContainer{
+  @include mainContainerMixin;
+  color: whitesmoke;
+  .inputContainer{
+    margin-bottom: 30px;
+
+
+  label{
+    margin-right: 10px;
+    font-size: 1.3em;
+  }
+  input{
+    background: none;
+    border: 0px;
+    border-bottom: 1px solid var(--thuder-color);
+    color: whitesmoke;
+
+  }
+  }
+
+}
+input[type="date"] {
+  -webkit-text-fill-color: whitesmoke;
+}
+::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+input:focus{
+  outline: none;
+ }
+ input:invalid{
+  border-bottom: 1px solid red !important;
+ }
+ @media screen and  (max-width: 770px){
+  .inputContainer{
+    flex-direction: column !important;
+    input{
+      margin-bottom: 30px;
+    }
+  }
+ }
+

@@ -1,1 +1,61 @@
-<p>client-page works!</p>
+<div class="mainContainer d-flex justify-content-center align-items-center">
+  <!-- id?:number,
+      nome:string,
+      cognome:string,
+      dataDiNascita: Date,
+      email:string,
+      numeroTelefono:string,
+      dataIscrizione?: Date,
+      dataUltimoIngresso?:Date,
+      ingresso: number -->
+  <div class="container d-flex justify-content-center align-items-center">
+    <form
+      (ngSubmit)="iscriviCliente(newClienteForm)"
+      #newClienteForm="ngForm"
+      class="d-flex flex-column justify-content-center align-items-center row"
+    >
+      <div class="inputContainer col d-flex align-items-center">
+        <label for="nome">Nome :</label>
+        <input type="text" name="nome" required ngModel class="me-3" />
+        <label for="cognome">Cognome : </label>
+        <input type="text" name="cognome" required ngModel class="me-3" />
+      </div>
+      <div class="inputContainer col d-flex align-items-center">
+        <label for="email">Email :</label>
+        <input type="email" name="email" required ngModel class="me-3" />
+        <label for="dataDiNascita">Data di nascita :</label>
+        <input type="date" name="dataDiNascita" required ngModel class="me-3" />
+      </div>
+      <div class="inputContainer d-flex col-12 align-items-center">
+        <label for="numeroTelefono">Numero telefono :</label>
+        <input
+          class="col"
+          type="tel"
+          pattern="[0-9]{10}"
+          name="numeroTelefono"
+          required
+          ngModel
+        />
+      </div>
+      <div class="inputContainer d-flex col align-items-center">
+        <label for="ingresso">N. ingressi :</label>
+        <input
+          class="col"
+          type="number"
+          name="ingresso"
+          min="1"
+          required
+          ngModel
+        />
+      </div>
+
+      <button
+        type="submit"
+        class="btn px-5 btn-outline-secondary sm"
+        [disabled]="!newClienteForm.valid"
+      >
+        Login
+      </button>
+    </form>
+  </div>
+</div>
