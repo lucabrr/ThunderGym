@@ -4,6 +4,15 @@
 .mainContainer{
   @include mainContainerMixin;
   color: whitesmoke;
+  h2{
+    margin-bottom: 50px;
+  }
+  form{
+    border: 1px solid var(--grey) ;
+    border-radius: 5px;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.522);
+  }
   .inputContainer{
     margin-bottom: 30px;
 
@@ -15,7 +24,7 @@
   input{
     background: none;
     border: 0px;
-    border-bottom: 1px solid var(--thuder-color);
+    border-bottom: 1px solid var(--thunder-color);
     color: whitesmoke;
 
   }

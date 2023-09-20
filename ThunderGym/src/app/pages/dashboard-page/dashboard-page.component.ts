@@ -27,7 +27,7 @@ percentualeFatturato:string | number = 0
 
 constructor(private authSvc:AuthorizzationService, private dashSvc:DashBoardService){}
 ngOnInit(): void {
-  this.dashSvc.getClienti().subscribe(res => console.log(res))
+
   this.dashSvc.getNumberOfClienti().subscribe(res => this.numeroTotaleClienti = res)
   this.dashSvc.getNumberOfValidClienti().subscribe(res=> this.numeroTotaleValidClienti = res)
   this.dashSvc.getNumberOfActiveClienti().subscribe(res=> this.numeroTotaleActiveClienti = res)

@@ -1,0 +1,24 @@
+@import "src/styles.scss";
+.mainContainer{
+  @include mainContainerMixin
+}
+.inputContainer{
+
+}
+.arrow{
+  font-size: 30px;
+ color: var(--thunder-color) !important;
+}
+i:hover{
+  color: whitesmoke !important;
+}
+.pen{
+  color: var(--thunder-color);
+}
+@media screen and (max-width : 1200px) {
+
+  .mediaQuery{
+    display: none;
+  }
+
+}

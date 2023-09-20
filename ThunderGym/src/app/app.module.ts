@@ -12,6 +12,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { DashboardPageComponent } from './pages/dashboard-page/dashboard-page.component';
 import { ClientPageComponent } from './pages/client-page/client-page.component';
 import { AdminInterceptor } from './interceptors/admin.interceptor';
+import { FindClientComponent } from './pages/find-client/find-client.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { AdminInterceptor } from './interceptors/admin.interceptor';
     FooterComponent,
     LoginPageComponent,
     DashboardPageComponent,
-    ClientPageComponent
+    ClientPageComponent,
+    FindClientComponent
   ],
   imports: [
     BrowserModule,

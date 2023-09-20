@@ -5,7 +5,8 @@ a{
 
 }
 .mainContainer{
-  background-color: rgb(19, 19, 19);
+  background-image:url("../../../assets/gym3.jpg");
+  background-size: cover;
   height: calc(100vh - 58px - 57px);
   color: whitesmoke !important;
   .container{
@@ -21,7 +22,7 @@ a{
           justify-content: center;
           padding: 10px;
           .titleContainer{
-            border-bottom: 1px solid var(--thuder-color);
+            border-bottom: 1px solid var(--thunder-color);
             font-size: 1.3em;
           }
           .numberContainer{

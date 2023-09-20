@@ -1,4 +1,6 @@
-<div class="mainContainer d-flex justify-content-center align-items-center">
+<div
+  class="mainContainer d-flex flex-column justify-content-center align-items-center"
+>
   <!-- id?:number,
       nome:string,
       cognome:string,
@@ -8,9 +10,11 @@
       dataIscrizione?: Date,
       dataUltimoIngresso?:Date,
       ingresso: number -->
+  <h2 *ngIf="!id">Iscrivi nuovo cliente</h2>
+  <h2 *ngIf="id">Modifica cliente</h2>
+
   <div class="container d-flex justify-content-center align-items-center">
     <form
-      (ngSubmit)="iscriviCliente(newClienteForm)"
       #newClienteForm="ngForm"
       class="d-flex flex-column justify-content-center align-items-center row"
     >
@@ -37,7 +41,7 @@
           ngModel
         />
       </div>
-      <div class="inputContainer d-flex col align-items-center">
+      <div *ngIf="!id" class="inputContainer d-flex col align-items-center">
         <label for="ingresso">N. ingressi :</label>
         <input
           class="col"
@@ -48,14 +52,92 @@
           ngModel
         />
       </div>
-
       <button
-        type="submit"
+        *ngIf="id"
+        type="button"
+        (click)="open(myModal2)"
         class="btn px-5 btn-outline-secondary sm"
         [disabled]="!newClienteForm.valid"
       >
-        Login
+        Conferma
       </button>
+      <button
+        *ngIf="!id"
+        type="button"
+        (click)="open(myModal)"
+        class="btn px-5 btn-outline-secondary sm"
+        [disabled]="!newClienteForm.valid"
+      >
+        Conferma
+      </button>
+      <!-- MODAL ISCRIZIONE -->
+      <ng-template *ngIf="!id" #content let-modal>
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">Conferma dati</h4>
+          <button
+            type="button"
+            class="btn-close"
+            aria-label="Close"
+            (click)="modal.dismiss('Cross click')"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div>Nome: {{ newClienteForm.value.nome }}</div>
+          <div>Cognome: {{ newClienteForm.value.cognome }}</div>
+          <div>Email: {{ newClienteForm.value.email }}</div>
+          <div>Data di nascita: {{ newClienteForm.value.dataDiNascita }}</div>
+          <div>telefono: {{ newClienteForm.value.numeroTelefono }}</div>
+          <div class="border-bottom border-dark mb-3">
+            numero ingressi: {{ newClienteForm.value.ingresso }}
+          </div>
+          <div>Totale: {{ newClienteForm.value.ingresso * 5 }},00€</div>
+        </div>
+        <div class="modal-footer">
+          <div class="fw-bold">
+            {{ serverRes }}
+          </div>
+          <button
+            type="button"
+            class="btn btn-outline-dark"
+            (click)="iscriviCliente(newClienteForm)"
+          >
+            Conferma e iscrivi
+          </button>
+        </div>
+        <!-- MODALE MODIFICA -->
+      </ng-template>
+      <ng-template *ngIf="id" #modal2 let-modal>
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">
+            Conferma la modifica dei dati
+          </h4>
+          <button
+            type="button"
+            class="btn-close"
+            aria-label="Close"
+            (click)="modal.dismiss('Cross click')"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div>Nome: {{ newClienteForm.value.nome }}</div>
+          <div>Cognome: {{ newClienteForm.value.cognome }}</div>
+          <div>Email: {{ newClienteForm.value.email }}</div>
+          <div>Data di nascita: {{ newClienteForm.value.dataDiNascita }}</div>
+          <div>telefono: {{ newClienteForm.value.numeroTelefono }}</div>
+        </div>
+        <div class="modal-footer">
+          <div class="fw-bold">
+            {{ serverRes }}
+          </div>
+          <button
+            type="button"
+            class="btn btn-outline-dark"
+            (click)="modificaCliente()"
+          >
+            Conferma e iscrivi
+          </button>
+        </div>
+      </ng-template>
     </form>
   </div>
 </div>

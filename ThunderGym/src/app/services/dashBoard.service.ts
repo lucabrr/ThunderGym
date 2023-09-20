@@ -7,6 +7,8 @@ import { ItotaleImporti } from '../interfaces/ItotaleImporti';
 import { ITotaleIscritti } from '../interfaces/ITotaleIscritti';
 import { NgForm } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { IpageableRes } from '../interfaces/IpageableRes';
+import { ClienteNameDTO } from '../interfaces/clienteNameDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +22,7 @@ export class DashBoardService {
   totalImportiUrl:string = "http://localhost:8080/api/dashboard/importi"
   totalIscrittiUrl:string = "http://localhost:8080/api/dashboard/iscritti"
   newClienteUrl:string = "http://localhost:8080/api/dashboard/newCliente"
+  modificaClienteUrl:string="http://localhost:8080/api/dashboard/modificaClient"
 
 constructor(private http:HttpClient) { }
 
@@ -46,6 +49,14 @@ getIscritti(){
 }
 iscriviNewCliente(form:NgForm){
 return this.http.post(this.newClienteUrl, form.value,{responseType: "text"})
-
+}
+getPageableCliente(url:string,cliente:ClienteNameDTO){
+  return this.http.post<IpageableRes>(url, cliente);
+}
+getClienteById(url:string){
+  return this.http.get<Icliente>(url)
+}
+modificaCliente(cliente:Icliente){
+  return this.http.post<Icliente | string>(this.modificaClienteUrl,cliente )
 }
 }

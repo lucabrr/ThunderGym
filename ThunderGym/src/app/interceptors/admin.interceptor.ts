@@ -13,7 +13,7 @@ export class AdminInterceptor implements HttpInterceptor {
   constructor() {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    console.log("sono l interceptor");
+
 
     let admin = localStorage.getItem("userData")
     if(admin){
@@ -23,7 +23,7 @@ export class AdminInterceptor implements HttpInterceptor {
           headers: request.headers.set('Authorization', 'Bearer ' + adminToken)
         }
       )
-      console.log(request);
+
 
       return next.handle(myRequest)
     }
