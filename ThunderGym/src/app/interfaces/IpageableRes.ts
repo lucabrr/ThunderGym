@@ -1,8 +1,9 @@
 import { Icliente } from "./Icliente";
+import { IclienteWithID } from "./IclienteWithID";
 
 export interface IpageableRes {
 
-    content: Icliente[];
+    content: IclienteWithID[];
     pageable?: {
       pageNumber: number;
       pageSize: number;

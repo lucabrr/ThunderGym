@@ -9,6 +9,7 @@ import { NgForm } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { IpageableRes } from '../interfaces/IpageableRes';
 import { ClienteNameDTO } from '../interfaces/clienteNameDTO';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Injectable({
   providedIn: 'root'
@@ -23,8 +24,9 @@ export class DashBoardService {
   totalIscrittiUrl:string = "http://localhost:8080/api/dashboard/iscritti"
   newClienteUrl:string = "http://localhost:8080/api/dashboard/newCliente"
   modificaClienteUrl:string="http://localhost:8080/api/dashboard/modificaClient"
+  rinnovaIngressoClienteUrl:string= "http://localhost:8080/api/dashboard/rinnovaIngresso/"
 
-constructor(private http:HttpClient) { }
+constructor(private http:HttpClient ,  public modal:NgbModal) { }
 
 getClienti(){
  return this.http.get(this.clientiUrl);
@@ -58,5 +60,8 @@ getClienteById(url:string){
 }
 modificaCliente(cliente:Icliente){
   return this.http.post<Icliente | string>(this.modificaClienteUrl,cliente )
+}
+rinnovaIngressoCliente(id:number, cliente:Icliente){
+  return this.http.patch<Icliente>(this.rinnovaIngressoClienteUrl+id,cliente)
 }
 }

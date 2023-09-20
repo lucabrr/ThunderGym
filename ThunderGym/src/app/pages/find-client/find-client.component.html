@@ -56,8 +56,68 @@
               ><i class="bi bi-pen"></i
             ></a>
             <span class="mx-2">/</span>
-            <a href="" class="pen"><i class="bi bi-box-arrow-in-up"></i></a>
+            <a class="pen"
+              ><i
+                (click)="openModal(); selezionaCliente(cliente)"
+                class="bi bi-box-arrow-in-up"
+              ></i
+            ></a>
           </td>
+          <ng-template #modalRinnova let-modal>
+            <div class="modal-header">
+              <h4 class="modal-title" id="modal-basic-title">
+                Rinnova Ingresso
+              </h4>
+              <button
+                type="button"
+                class="btn-close"
+                aria-label="Close"
+                (click)="modal.dismiss('Cross click')"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <div>Nome: {{ clienteSelezionato.nome }}</div>
+              <div>Cognome: {{ clienteSelezionato.cognome }}</div>
+              <div>
+                Numero ingressi attuale: {{ clienteSelezionato.ingresso }}
+              </div>
+              <div class="border-bottom border-dark mb-3 d-flex">
+                Numero Ingressi da aggiungere:
+                <form #formRinnova="ngForm">
+                  <input
+                    class="ingressoInput"
+                    type="number"
+                    name="ingresso"
+                    min="1"
+                    required
+                    ngModel
+                  />
+                </form>
+              </div>
+              <div>
+                Ingressi totale:
+                {{
+                  clienteSelezionato.ingresso + formRinnova.form.value.ingresso
+                }}
+              </div>
+              <div>
+                Importo da pagare:
+                {{ formRinnova.form.value.ingresso * 5 }},00€
+              </div>
+            </div>
+            <div class="modal-footer">
+              <div class="fw-bold">
+                {{ serverRes }}
+              </div>
+              <button
+                type="button"
+                class="btn btn-outline-dark"
+                (click)="rinnovaCliente(clienteSelezionato.id, formRinnova)"
+              >
+                Conferma e Rinnova
+              </button>
+            </div>
+          </ng-template>
         </tr>
       </tbody>
     </table>

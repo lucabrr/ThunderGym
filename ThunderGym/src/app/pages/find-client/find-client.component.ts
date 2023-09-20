@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Icliente } from 'src/app/interfaces/Icliente';
+import { IclienteWithID } from 'src/app/interfaces/IclienteWithID';
 import { IpageableRes } from 'src/app/interfaces/IpageableRes';
 import { ClienteNameDTO } from 'src/app/interfaces/clienteNameDTO';
 import { DashBoardService } from 'src/app/services/dashBoard.service';
@@ -12,8 +14,16 @@ import { DashBoardService } from 'src/app/services/dashBoard.service';
 })
 export class FindClientComponent implements OnInit{
   constructor(private dashSvc:DashBoardService){}
+
+  @ViewChild("modalRinnova")
+  modalRinnova!:ElementRef
+
+
   pageIndex:number=0
   findClienteUrl:string = `http://localhost:8080/api/dashboard/findCliente?page=${this.pageIndex}&size=10`
+  serverRes!:string
+  clienteSelezionato!:IclienteWithID
+
 
   clienteDTO:ClienteNameDTO= {
     nome:""
@@ -58,6 +68,15 @@ export class FindClientComponent implements OnInit{
       this.findClienteUrl =  `http://localhost:8080/api/dashboard/findCliente?page=${this.pageIndex}&size=10`
       this.getCliente()
     }
+  }
+  openModal(){
+    this.dashSvc.modal.open(this.modalRinnova)
+  }
+  rinnovaCliente(id:number, form:NgForm){
+    this.dashSvc.rinnovaIngressoCliente(id,form.value).subscribe(res=> { this.serverRes ="Ingresso rinnovato"}, err=> { this.serverRes ="Errore, qualcosa è andato storto"})
+  }
+  selezionaCliente(cliente:IclienteWithID):void{
+    this.clienteSelezionato = cliente
   }
 
 }

@@ -2,8 +2,15 @@
 .mainContainer{
   @include mainContainerMixin
 }
-.inputContainer{
-
+.ingressoInput{
+  width: 55px;
+  margin-bottom: 10px;
+  margin-left: 5px;
+  border: none;
+  border-bottom: 1px solid black;
+}
+.ingressoInput:focus{
+  outline: none;
 }
 .arrow{
   font-size: 30px;

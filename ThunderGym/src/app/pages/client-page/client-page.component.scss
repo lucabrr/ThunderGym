@@ -41,7 +41,7 @@ input:focus{
   outline: none;
  }
  input:invalid{
-  border-bottom: 1px solid red !important;
+  border-bottom: 1px solid rgb(115, 30, 30) !important;
  }
  @media screen and  (max-width: 770px){
   .inputContainer{
