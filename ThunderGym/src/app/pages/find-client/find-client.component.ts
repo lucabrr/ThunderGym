@@ -73,7 +73,9 @@ export class FindClientComponent implements OnInit{
     this.dashSvc.modal.open(this.modalRinnova)
   }
   rinnovaCliente(id:number, form:NgForm){
-    this.dashSvc.rinnovaIngressoCliente(id,form.value).subscribe(res=> { this.serverRes ="Ingresso rinnovato"}, err=> { this.serverRes ="Errore, qualcosa è andato storto"})
+    this.dashSvc.rinnovaIngressoCliente(id,form.value).subscribe(res=>
+      { this.serverRes ="Ingresso rinnovato";  this.getCliente(); this.pageIndex=0 },
+       err=> { this.serverRes ="Errore, qualcosa è andato storto"})
   }
   selezionaCliente(cliente:IclienteWithID):void{
     this.clienteSelezionato = cliente
