@@ -1,27 +1,40 @@
-# ThunderGym
+# Benvenuto/a sulla documentazione di ThunderGym
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.3.
+---
 
-## Development server
+### Che cos'è?
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+ThunderGym è un gestionale per palestre, dove il cliente ha a disposizione diversi dati e funzionalità.
 
-## Code scaffolding
+### Credenziali:
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- **Username:** admin
+- **Password:** admin
 
-## Build
+---
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### Panoramica e funzionalità.
 
-## Running unit tests
+Una volta effettuato l'accesso, si sarà indirizzati alla dashboard dove si troveranno dati come:
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- Numero dei clienti totali
+- Clienti validi (coloro che hanno ancora a disposizione 1 ingresso)
+- Clienti inattivi (coloro che nell'ultimo mese non hanno effettuato neanche 1 ingresso in palestra)
+- Clienti in scadenza (coloro che hanno a disposizione meno di 4 ingressi)
+- Fatturato mensile corrente e scorso con percentuale di decremento o incremento
 
-## Running end-to-end tests
+##### NB. tutti idati sono dinamici.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+##### Funzionalità:
 
-## Further help
+- Iscrizione cliente
+- Ricerca per nome
+- Modifica dati del cliente
+- Rinnova ingresso cliente.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+### Tecnologia.
+
+Lato Front-end è stato utilizzato angular v16 con
+bootstrap e JWT per l' autenticazione.
+
+Lato Back-end è stato utilizzato Java con Springboot,Maven, JWT, PostgreSQL,Hibernate,JPA e javaFaker.

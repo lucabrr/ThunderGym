@@ -16,7 +16,7 @@ import { ClientSummary } from '../interfaces/clientSummary';
   providedIn: 'root'
 })
 export class DashBoardService {
-  apiUrl:string ="http://localhost:8080/api/dashboard/";
+  apiUrl:string ="https://microhub.hop.sh/api/dashboard/";
 
 
   clientsSummary:string = this.apiUrl + "clientSummary"

@@ -11,7 +11,7 @@ import { BehaviorSubject, catchError, map, tap, throwError } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthorizzationService {
-  loginUrl:string ="http://localhost:8080/api/auth/login"
+  loginUrl:string ="https://microhub.hop.sh/api/auth/login"
 
   jwtHelper:JwtHelperService = new JwtHelperService();
   //Creo un istanza di BehaviorSubject che può essere nullo o IregisterRes(oggetto con token + user)

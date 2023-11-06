@@ -21,7 +21,7 @@ export class FindClientComponent implements OnInit{
   buttonRinnova:boolean = true
 
   pageIndex:number=0
-  findClienteUrl:string = "http://localhost:8080/api/dashboard/findCliente"
+  findClienteUrl:string = "https://microhub.hop.sh/api/dashboard/findCliente"
   serverRes!:string
   clienteSelezionato!:IclienteWithID
   pathForApi!:string
@@ -40,7 +40,7 @@ export class FindClientComponent implements OnInit{
   ngOnInit():void {
     this.route.params.subscribe((res:any ) => {
       if(res.path){
-        this.pathForApi= "http://localhost:8080/api/dashboard/"
+        this.pathForApi= "https://microhub.hop.sh/api/dashboard/"
         this.pathForApi = this.pathForApi + res.path;
         this.findClienteUrl =  this.pathForApi
         console.log(this.findClienteUrl+this.urlToUse);

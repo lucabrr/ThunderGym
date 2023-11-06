@@ -39,7 +39,7 @@ myModal!:ElementRef
  ngOnInit(): void {
   this.route.params.subscribe((res:any) =>{ this.id = res.id
     if(this.id){
-      this.dashSvc.getClienteById("http://localhost:8080/api/dashboard/clienteId/"+ this.id)
+      this.dashSvc.getClienteById("https://microhub.hop.sh/api/dashboard/clienteId/"+ this.id)
       .subscribe(res => {
         this.clienteDaInviare = res
         this.clienteBackup = res
