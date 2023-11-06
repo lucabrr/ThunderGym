@@ -1,8 +1,8 @@
 <div class="mainContainer">
   <form class="d-flex justify-content-center pt-4">
     <div class="mb-3 inputContainer d-flex align-items-center">
-      <label class="text-light me-3">Inserisci nome:</label>
-      <div class="">
+      <label *ngIf="!pathForApi" class="text-light me-3">Inserisci nome:</label>
+      <div *ngIf="!pathForApi">
         <input
           class="form-control"
           type="text"
@@ -10,7 +10,11 @@
           [(ngModel)]="clienteDTO.nome"
         />
       </div>
-      <button class="btn btn-outline-light ms-3" (click)="getCliente()">
+      <button
+        *ngIf="!pathForApi"
+        class="btn btn-outline-light ms-3"
+        (click)="getClienteNrefresh()"
+      >
         Cerca
       </button>
       <div class="d-flex justify-content-between p-2 align-items-center">
@@ -18,10 +22,10 @@
           <i class="bi bi-arrow-left arrow"></i>
         </button>
         <span class="text-light"
-          >page: {{ pageIndex + 1 }} of {{ pageable.totalPages }}</span
+          >pagina: {{ pageIndex + 1 }} di {{ pageable.totalPages }}</span
         >
-        <button class="btn">
-          <i class="bi bi-arrow-right arrow" (click)="nextPage()"></i>
+        <button class="btn" (click)="nextPage()">
+          <i class="bi bi-arrow-right arrow"></i>
         </button>
       </div>
     </div>
@@ -37,6 +41,8 @@
           <th class="mediaQuery" scope="col">Telefono</th>
           <th class="mediaQuery" scope="col">Data iscrizione</th>
           <th class="mediaQuery" scope="col">Ingressi</th>
+          <th class="mediaQuery" scope="col">Data ultimo ingresso</th>
+
           <th class="mediaQuery" scope="col">Modifica/Rinnova</th>
         </tr>
       </thead>
@@ -47,10 +53,22 @@
           </td>
           <td>{{ cliente.cognome }}</td>
           <td class="mediaQuery">{{ cliente.dataDiNascita }}</td>
-          <td>{{ cliente.email }}</td>
-          <td class="mediaQuery">{{ cliente.numeroTelefono }}</td>
+          <td>
+            <a href="mailto:{{ cliente.email }}">{{ cliente.email }}</a>
+          </td>
+          <td class="mediaQuery">
+            <a
+              href="https://wa.me/{{ cliente.numeroTelefono }}"
+              target="_blank"
+              >{{ cliente.numeroTelefono }}</a
+            >
+          </td>
           <td class="mediaQuery">{{ cliente.dataIscrizione }}</td>
           <td class="mediaQuery">N. {{ cliente.ingresso }}</td>
+          <td class="mediaQuery text-center">
+            {{ cliente.dataUltimoIngresso }}
+          </td>
+
           <td class="text-center mediaQuery">
             <a [routerLink]="['/client', cliente.id]" class="pen"
               ><i class="bi bi-pen"></i
@@ -110,6 +128,7 @@
                 {{ serverRes }}
               </div>
               <button
+                *ngIf="buttonRinnova"
                 type="button"
                 class="btn btn-outline-dark"
                 (click)="rinnovaCliente(clienteSelezionato.id, formRinnova)"

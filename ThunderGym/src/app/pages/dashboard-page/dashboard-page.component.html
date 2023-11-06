@@ -5,26 +5,31 @@
       <div class="col mb-2 d-flex flex-column align-items-center">
         <div class="colv1">
           <div class="titleContainer">Clienti totali</div>
-          <div class="numberContainer">{{ numeroTotaleClienti }}</div>
+          <div class="numberContainer">{{ clienti }}</div>
         </div>
       </div>
       <div class="col mb-2 d-flex flex-column align-items-center">
         <div class="colv1">
           <div class="titleContainer">Clienti con ingresso valido</div>
-          <div class="numberContainer">{{ numeroTotaleValidClienti }}</div>
+          <div class="numberContainer">{{ validClienti }}</div>
         </div>
       </div>
+
       <div class="col mb-2 d-flex flex-column align-items-center">
-        <div class="colv1">
-          <div class="titleContainer">Clienti attivi</div>
-          <div class="numberContainer">{{ numeroTotaleActiveClienti }}</div>
-        </div>
+        <a [routerLink]="['/findClient', 'inactiveClientiPageable']">
+          <div class="colv1">
+            <div class="titleContainer">Clienti inattivi</div>
+            <div class="numberContainer">{{ inactiveClienti }}</div>
+          </div>
+        </a>
       </div>
       <div class="col mb-2 d-flex flex-column align-items-center">
-        <div class="colv1">
-          <div class="titleContainer">Clienti inattivi</div>
-          <div class="numberContainer">{{ numeroTotaleInactiveClienti }}</div>
-        </div>
+        <a [routerLink]="['/findClient', 'clienteInScadenza']">
+          <div class="colv1">
+            <div class="titleContainer">Clienti in scadenza</div>
+            <div class="numberContainer">{{ clientiInScadenza }}</div>
+          </div>
+        </a>
       </div>
     </div>
     <!-- SECONDA RIGA -->
@@ -33,14 +38,16 @@
         <div class="colv1 colv2 mb-2">
           <div class="titleContainer">Fatturato mensile</div>
           <div class="numberContainer text-center">
-            {{ importoMeseCorrente.toFixed(2) }} €
+            {{ importoMeseCorrente | currency : "EUR" }}
           </div>
           <div
             class="footerContainer d-flex justify-content-between align-items-center"
           >
             <div>
               <div class="text-light">Mese Precendente</div>
-              <div class="text-light">{{ importoMeseScorso.toFixed(2) }} €</div>
+              <div class="text-light">
+                {{ importoMeseScorso | currency : "EUR" }}
+              </div>
             </div>
             <div [ngStyle]="{ color: colorPercentualeFatturato }">
               {{ percentualeFatturato }}%
@@ -68,12 +75,17 @@
       <div class="col-6">
         <div class="colv1 colv2 mb-2">
           <div class="titleContainer">
-            <a [routerLink]="['/client']">Iscrivi nuovo cliente</a>
+            <a [routerLink]="['/client']"
+              ><i class="bi bi-person-plus-fill mx-2"></i>Iscrivi nuovo
+              cliente</a
+            >
           </div>
         </div>
         <div class="colv1 colv2">
           <div class="titleContainer">
-            <a [routerLink]="['/findClient']">Cerca cliente</a>
+            <a [routerLink]="['/findClient']"
+              ><i class="bi bi-search mx-2"></i>Cerca cliente</a
+            >
           </div>
         </div>
       </div>

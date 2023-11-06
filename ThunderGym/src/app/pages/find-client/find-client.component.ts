@@ -1,7 +1,8 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { Icliente } from 'src/app/interfaces/Icliente';
+import { ActivatedRoute, Params } from '@angular/router';
+
+
 import { IclienteWithID } from 'src/app/interfaces/IclienteWithID';
 import { IpageableRes } from 'src/app/interfaces/IpageableRes';
 import { ClienteNameDTO } from 'src/app/interfaces/clienteNameDTO';
@@ -13,16 +14,18 @@ import { DashBoardService } from 'src/app/services/dashBoard.service';
   styleUrls: ['./find-client.component.scss']
 })
 export class FindClientComponent implements OnInit{
-  constructor(private dashSvc:DashBoardService){}
+  constructor(private dashSvc:DashBoardService, private route:ActivatedRoute){}
 
   @ViewChild("modalRinnova")
   modalRinnova!:ElementRef
-
+  buttonRinnova:boolean = true
 
   pageIndex:number=0
-  findClienteUrl:string = `http://localhost:8080/api/dashboard/findCliente?page=${this.pageIndex}&size=10`
+  findClienteUrl:string = "http://localhost:8080/api/dashboard/findCliente"
   serverRes!:string
   clienteSelezionato!:IclienteWithID
+  pathForApi!:string
+  urlToUse:string =`?page=${this.pageIndex}&size=10`
 
 
   clienteDTO:ClienteNameDTO= {
@@ -35,15 +38,30 @@ export class FindClientComponent implements OnInit{
 
 
   ngOnInit():void {
-    this.getCliente()
+    this.route.params.subscribe((res:any ) => {
+      if(res.path){
+        this.pathForApi= "http://localhost:8080/api/dashboard/"
+        this.pathForApi = this.pathForApi + res.path;
+        this.findClienteUrl =  this.pathForApi
+        console.log(this.findClienteUrl+this.urlToUse);
+        this.getClienteWithPost(this.findClienteUrl, this.urlToUse)
+      }else{
+        this.getClienteWithPost(this.findClienteUrl, this.urlToUse)
+      }
+    })
   }
 
-  getCliente(){
+  getClienteWithPost(firstPartUrl:string, secondPartUrl:string){
 
-     this.dashSvc.getPageableCliente(this.findClienteUrl,this.clienteDTO).subscribe(res => {console.log(this.findClienteUrl);
-      console.log(res); this.pageable = res}
+     this.dashSvc.getPageableCliente(firstPartUrl + secondPartUrl,this.clienteDTO)
+     .subscribe(res => { this.pageable = res}
 
     )
+  }
+
+  getClienteNrefresh(){
+    this.getClienteWithPost(this.findClienteUrl, this.urlToUse)
+
   }
 
   nextPage():void{
@@ -51,12 +69,11 @@ export class FindClientComponent implements OnInit{
 
       if(this.pageIndex < this.pageable.totalPages - 1){
         console.log(this.pageable.totalPages);
-
         this.pageIndex = this.pageIndex + 1
-        this.findClienteUrl =  `http://localhost:8080/api/dashboard/findCliente?page=${this.pageIndex}&size=10`
+        console.log(this.findClienteUrl);
+        this.urlToUse = `?page=${this.pageIndex}&size=10`
         console.log(this.pageIndex);
-
-        this.getCliente()
+        this.getClienteWithPost(this.findClienteUrl, this.urlToUse)
 
       }
     }
@@ -65,17 +82,30 @@ export class FindClientComponent implements OnInit{
   previusPage():void{
     if(this.pageIndex >= 1){
       this.pageIndex = this.pageIndex - 1
-      this.findClienteUrl =  `http://localhost:8080/api/dashboard/findCliente?page=${this.pageIndex}&size=10`
-      this.getCliente()
+      this.urlToUse = `?page=${this.pageIndex}&size=10`
+      this.getClienteWithPost(this.findClienteUrl, this.urlToUse)
     }
   }
   openModal(){
     this.dashSvc.modal.open(this.modalRinnova)
+    this.buttonRinnova = true
+    this.serverRes =""
   }
-  rinnovaCliente(id:number, form:NgForm){
-    this.dashSvc.rinnovaIngressoCliente(id,form.value).subscribe(res=>
-      { this.serverRes ="Ingresso rinnovato";  this.getCliente(); this.pageIndex=0 },
-       err=> { this.serverRes ="Errore, qualcosa è andato storto"})
+  rinnovaCliente(id: number, form: NgForm): void {
+    this.dashSvc.rinnovaIngressoCliente(id, form.value).subscribe(
+      (res) => {
+        this.serverRes = "Ingresso rinnovato";
+        this.pageIndex = 0;
+        this.buttonRinnova = false;
+        this.urlToUse = `?page=${this.pageIndex}&size=10`
+        console.log(this.findClienteUrl+this.urlToUse);
+
+        this.getClienteWithPost(this.findClienteUrl, this.urlToUse);
+      },
+      (err) => {
+        this.serverRes = "Errore, qualcosa è andato storto";
+      }
+    );
   }
   selezionaCliente(cliente:IclienteWithID):void{
     this.clienteSelezionato = cliente

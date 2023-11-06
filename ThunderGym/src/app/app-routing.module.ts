@@ -36,7 +36,14 @@ const routes: Routes = [
       component: FindClientComponent,
       canActivate: [DashboardGuard]
 
-      }
+      },
+      {
+        path:"findClient/:path",
+        component: FindClientComponent,
+        canActivate: [DashboardGuard]
+
+        }
+
 
 ];
 

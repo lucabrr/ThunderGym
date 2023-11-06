@@ -10,43 +10,37 @@ import { Observable } from 'rxjs';
 import { IpageableRes } from '../interfaces/IpageableRes';
 import { ClienteNameDTO } from '../interfaces/clienteNameDTO';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ClientSummary } from '../interfaces/clientSummary';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DashBoardService {
-  clientiUrl:string ="http://localhost:8080/api/dashboard/allClienti"
-  numberOfClientiUrl:string = "http://localhost:8080/api/dashboard/nClienti"
-  numberOfValidClientiUrl:string="http://localhost:8080/api/dashboard/validClienti"
-  numberOfActiveClientiUrl:string="http://localhost:8080/api/dashboard/activeClienti"
-  inactiveClientiUrl:string="http://localhost:8080/api/dashboard/inactiveClienti"
-  totalImportiUrl:string = "http://localhost:8080/api/dashboard/importi"
-  totalIscrittiUrl:string = "http://localhost:8080/api/dashboard/iscritti"
-  newClienteUrl:string = "http://localhost:8080/api/dashboard/newCliente"
-  modificaClienteUrl:string="http://localhost:8080/api/dashboard/modificaClient"
-  rinnovaIngressoClienteUrl:string= "http://localhost:8080/api/dashboard/rinnovaIngresso/"
+  apiUrl:string ="http://localhost:8080/api/dashboard/";
+
+
+  clientsSummary:string = this.apiUrl + "clientSummary"
+  totalImportiUrl:string = this.apiUrl + "importi"
+  totalIscrittiUrl:string = this.apiUrl + "iscritti"
+  newClienteUrl:string = this.apiUrl + "newCliente"
+  modificaClienteUrl:string=this.apiUrl + "modificaClient"
+  rinnovaIngressoClienteUrl:string= this.apiUrl + "rinnovaIngresso/"
+  clienteInScandenzaUrl:string= this.apiUrl + "clienteInScadenza"
 
 constructor(private http:HttpClient ,  public modal:NgbModal) { }
 
-getClienti(){
- return this.http.get(this.clientiUrl);
+
+//
+
+
+
+getClientsSummary(){
+  return this.http.get<ClientSummary>(this.clientsSummary)
 }
-getNumberOfClienti(){
-  return this.http.get<number>(this.numberOfClientiUrl)
-}
-getNumberOfValidClienti(){
-  return this.http.get<number>(this.numberOfValidClientiUrl)
-}
-getNumberOfActiveClienti(){
-  return this.http.get<number>(this.numberOfActiveClientiUrl)
-}
-getInactiveClienti(){
-  return this.http.get<Icliente[]>(this.inactiveClientiUrl)
-}
-getAllImporti(){
+getAllImportiMeseCorrenteNpassato(){
   return this.http.get<ItotaleImporti>(this.totalImportiUrl)
 }
-getIscritti(){
+getIscrittiMeseCorrenteNpassato(){
   return this.http.get<ITotaleIscritti>(this.totalIscrittiUrl)
 }
 iscriviNewCliente(form:NgForm){
@@ -54,6 +48,9 @@ return this.http.post(this.newClienteUrl, form.value,{responseType: "text"})
 }
 getPageableCliente(url:string,cliente:ClienteNameDTO){
   return this.http.post<IpageableRes>(url, cliente);
+}
+getPageableClienteV2(url:string){
+  return this.http.get<IpageableRes>(url);
 }
 getClienteById(url:string){
   return this.http.get<Icliente>(url)
@@ -63,5 +60,8 @@ modificaCliente(cliente:Icliente){
 }
 rinnovaIngressoCliente(id:number, cliente:Icliente){
   return this.http.patch<Icliente>(this.rinnovaIngressoClienteUrl+id,cliente)
+}
+getClienteInScadenza(){
+  return this.http.post<IpageableRes>(this.clienteInScandenzaUrl, null)
 }
 }

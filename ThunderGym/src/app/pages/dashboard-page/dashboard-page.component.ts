@@ -8,10 +8,9 @@ import { DashBoardService } from 'src/app/services/dashBoard.service';
   styleUrls: ['./dashboard-page.component.scss']
 })
 export class DashboardPageComponent implements OnInit {
-numeroTotaleClienti!:number
-numeroTotaleValidClienti!:number
-numeroTotaleActiveClienti!:number
-numeroTotaleInactiveClienti!:number
+clienti!:number
+validClienti!:number
+inactiveClienti!:number
 importoMeseCorrente:number = 0
 importoMeseScorso:number = 0
 colorPercentualeFatturato!:string
@@ -20,6 +19,7 @@ iscrittiMeseCorrente!:number
 iscrittiMeseScorso!:number
 percentualeIscritti:string | number = 0
 percentualeFatturato:string | number = 0
+clientiInScadenza!:number | undefined
 
 
 
@@ -28,16 +28,22 @@ percentualeFatturato:string | number = 0
 constructor(private authSvc:AuthorizzationService, private dashSvc:DashBoardService){}
 ngOnInit(): void {
 
-  this.dashSvc.getNumberOfClienti().subscribe(res => this.numeroTotaleClienti = res)
-  this.dashSvc.getNumberOfValidClienti().subscribe(res=> this.numeroTotaleValidClienti = res)
-  this.dashSvc.getNumberOfActiveClienti().subscribe(res=> this.numeroTotaleActiveClienti = res)
-  this.dashSvc.getInactiveClienti().subscribe(res =>this.numeroTotaleInactiveClienti= res.length )
-  this.dashSvc.getAllImporti().subscribe(res =>
+
+  this.dashSvc.getClientsSummary().subscribe(res => {
+    this.clienti = res.clientiTotali;
+    this.validClienti = res.clientiValidi;
+    this.inactiveClienti= res.clientiInattivi;
+    this.clientiInScadenza= res.clienti_inScadenza;
+    console.log(res);
+
+  })
+
+  this.dashSvc.getAllImportiMeseCorrenteNpassato().subscribe(res =>
     {this.importoMeseCorrente = res.importoMeseCorrente;
        this.importoMeseScorso = res.importoMeseScorso;
          this.percentualeFatturato = this.calcolaPercentuale(this.importoMeseCorrente, this.importoMeseScorso);
         })
-  this.dashSvc.getIscritti().subscribe(res =>
+  this.dashSvc.getIscrittiMeseCorrenteNpassato().subscribe(res =>
     {this.iscrittiMeseCorrente = res.iscrittiMeseCorrente;
        this.iscrittiMeseScorso = res.iscrittiMeseScorso;
        this.percentualeIscritti = this.calcolaPercentuale(this.iscrittiMeseCorrente , this.iscrittiMeseScorso , "iscritti");
