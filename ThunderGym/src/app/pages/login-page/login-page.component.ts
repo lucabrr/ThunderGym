@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { catchError, throwError } from 'rxjs';
@@ -9,12 +9,14 @@ import { AuthorizzationService } from 'src/app/services/authorizzation.service';
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.scss']
 })
-export class LoginPageComponent implements OnInit {
+export class LoginPageComponent implements OnInit , OnDestroy {
   isLogged!:boolean
   loginErrorMessage!:string
+  isLoading:boolean = false
 
 
   constructor(private authSvc:AuthorizzationService, private router:Router){}
+
 
 
   ngOnInit():void{
@@ -23,13 +25,14 @@ export class LoginPageComponent implements OnInit {
  }
 
   login(form:NgForm){
-
+    this.isLoading = true
     if(form.valid){
 
       this.authSvc.login(form.value).pipe(
         catchError(err => {
 
           this.loginErrorMessage = err.error.message;
+          this.isLoading=false
 
 
 
@@ -43,4 +46,8 @@ export class LoginPageComponent implements OnInit {
         this.loginErrorMessage = "inserisci i tuoi dati"
       }
   }
+  ngOnDestroy(): void {
+    this.isLoading = false
+  }
 }
+

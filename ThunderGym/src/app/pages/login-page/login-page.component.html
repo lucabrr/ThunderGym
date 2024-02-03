@@ -29,10 +29,15 @@
       <span>
         <a href="">Password dimenticata?</a>
       </span>
+      <div  class="spinner-border mt-2" role="status" *ngIf="isLoading" >
+
+      </div>
       <button
         type="submit"
         class="btn px-5 btn-outline-secondary"
         [disabled]="!loginForm.valid"
+        *ngIf="!isLoading"
+
       >
         Login
       </button>
