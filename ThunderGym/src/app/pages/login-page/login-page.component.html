@@ -29,18 +29,21 @@
       <span>
         <a href="">Password dimenticata?</a>
       </span>
-      <div  class="spinner-border mt-2" role="status" *ngIf="isLoading" >
-
-      </div>
+      <div class="spinner-border mt-2" role="status" *ngIf="isLoading"></div>
       <button
         type="submit"
         class="btn px-5 btn-outline-secondary"
         [disabled]="!loginForm.valid"
         *ngIf="!isLoading"
-
       >
         Login
       </button>
+      <a
+        href="https://github.com/lucabrr/ThunderGymFE/tree/deploy/ThunderGym#user-content-benvenutoa-sulla-documentazione-di-thundergym"
+        target="_blank"
+        class="mt-2"
+        >credenziali</a
+      >
     </div>
   </form>
 </div>
